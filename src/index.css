@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+
+.custom-carousel .slick-prev,
+.custom-carousel .slick-next {
+  color: black;
+  z-index: 1;
+}
+
+
+.custom-carousel .slick-prev:hover,
+.custom-carousel .slick-next:hover {
+  color: #000;
+}
+
+.custom-carousel .slick-dots li button {
+  background: #000;
+}
+
+
