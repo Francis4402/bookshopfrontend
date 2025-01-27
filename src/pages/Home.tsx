@@ -1,11 +1,11 @@
-import AllBooks from "../components/AllBooks"
-import AutoGraphysection from "../components/AutoGraphysection"
-import BookPromotionEvents from "../components/BookPromotionEvents"
-import Carousels from "../components/Carousel"
-import CategoryButtons from "../components/CategoryButtons"
-import LogoGrids from "../components/LogoGrids"
-import OurServices from "../components/OurServices"
-import OurservicesAuthor from "../components/OurservicesAuthor"
+import AllBooks from "../components/homepagecomponents/AllBooks"
+import AutoGraphysection from "../components/homepagecomponents/AutoGraphysection"
+import BookPromotionEvents from "../components/homepagecomponents/BookPromotionEvents"
+import Carousels from "../components/homepagecomponents/Carousel"
+import CategoryButtons from "../components/homepagecomponents/CategoryButtons"
+import LogoGrids from "../components/homepagecomponents/LogoGrids"
+import OurServices from "../components/homepagecomponents/OurServices"
+import OurservicesAuthor from "../components/homepagecomponents/OurservicesAuthor"
 
 
 

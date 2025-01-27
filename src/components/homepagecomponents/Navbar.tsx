@@ -7,7 +7,6 @@ import DrawerSlider from "./DrawerSlider";
 
 const Navbar = () => {
 
-
   return (
     <div>
       <Topnav/>
