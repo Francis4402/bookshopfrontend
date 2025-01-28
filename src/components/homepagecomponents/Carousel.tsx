@@ -31,7 +31,7 @@ const Carousels = () => {
     }, []);
 
   return (
-    <Carousel arrows className="custom-carousel">
+    <Carousel autoplay arrows className="custom-carousel">
         <div>
             <div className="md:h-[550px] h-auto w-full bg-[#efe6d5] md:text-left text-center flex lg:flex-row flex-col gap-5 justify-between items-center md:px-40 p-10">
                 <div className="max-w-sm lg:max-w-xl flex flex-col gap-4">
