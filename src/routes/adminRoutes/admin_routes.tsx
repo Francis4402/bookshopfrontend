@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
-import AddNewBooks from "../../pages/Dashboard/adminsidebarPages/AddNewBooks";
-import GetAllBooks from "../../pages/Dashboard/adminsidebarPages/GetAllBooks";
+import AddNewBooks from "../../pages/Dashboard/adminsidebarPages/BookMangement/AddNewBooks";
+import GetAllBooks from "../../pages/Dashboard/adminsidebarPages/BookMangement/GetAllBooks";
 import GetAllUsers from "../../pages/Dashboard/adminsidebarPages/GetAllUsers";
-import UpdateBookDetails from "../../pages/Dashboard/adminsidebarPages/UpdateBookDetails";
+import UpdateBookDetails from "../../pages/Dashboard/adminsidebarPages/BookMangement/UpdateBookDetails";
 import Dashboard from "../../pages/Dashboard/Dashboard";
 import GetAllOrders from "../../pages/Dashboard/orderPages/GetAllOrders";
 import OrderRevenue from "../../pages/Dashboard/orderPages/OrderRevenue";
@@ -26,17 +26,17 @@ export const adminPaths = [
         children: [
             {
                 name: 'All Books',
-                path: 'products',
+                path: 'get-products',
                 element: <GetAllBooks/>
             },
             {
                 name: 'Add New Books',
-                path: 'products',
+                path: 'add-products',
                 element: <AddNewBooks/>
             },
             {
                 name: 'Update Book Details',
-                path: 'products',
+                path: 'update-products',
                 element: <UpdateBookDetails/>
             }
         ]
@@ -47,7 +47,7 @@ export const adminPaths = [
         children: [
             {
                 name: 'All Users',
-                path: 'products',
+                path: 'all-users',
                 element: <GetAllUsers/>
             }
         ]

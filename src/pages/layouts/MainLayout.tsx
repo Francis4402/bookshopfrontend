@@ -33,7 +33,7 @@ const MainLayout = () => {
     }
 
   return (
-    <Layout hasSider>
+    <Layout hasSider style={{ height: '100%' }}>
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

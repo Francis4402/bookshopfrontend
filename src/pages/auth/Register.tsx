@@ -1,8 +1,12 @@
 import FForm from '../../components/form/FForm';
 import FInput from '../../components/form/FInput';
-import { FieldValues } from 'react-hook-form';
-import { useRegisterMutation } from '../../redux/features/auth/authApi';
-import { Link } from 'react-router-dom';
+import { Controller, FieldValues } from 'react-hook-form';
+import { useLoginMutation, useRegisterMutation } from '../../redux/features/auth/authApi';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
+import { Form, Input } from 'antd';
+import { useAppDispatch } from '../../redux/hooks';
+import { setUser } from '../../redux/features/auth/authSlice';
 
 interface DrawerSliderProps {
   trigger?: React.ReactNode;
@@ -10,21 +14,41 @@ interface DrawerSliderProps {
 
 const Register: React.FC<DrawerSliderProps> = () => {
 
-  const [register, {data, error}] = useRegisterMutation();
+  const navigate = useNavigate();
 
-  console.log(data);
-  console.log(error);
+  const dispatch = useAppDispatch();
 
-  const onsubmit = (data: FieldValues) => {
+  const [register] = useRegisterMutation();
+
+  const [login] = useLoginMutation();
+
+
+  const onsubmit = async (data: FieldValues) => {
     
-    console.log(data);
-    const userInfo = {
-      name: data.name,
-      email: data.useremail,
-      password: data.password,
-    };
+    const formData = new FormData();
+
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    formData.append('password', data.password);
     
-    register(userInfo);
+    formData.append('data', JSON.stringify(data));
+    formData.append('file', data.profileImage);
+
+    console.log(Object.fromEntries(formData));
+    
+    try {
+      await register(formData).unwrap();
+      toast.success("Registration Successful");
+
+      const loginRes = await login({email: data.email, password: data.password}).unwrap();
+      
+      dispatch(setUser({user: loginRes.data.user, token: loginRes.data.accessToken}));
+
+      navigate('/');
+      
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
 
   }
 
@@ -39,10 +63,14 @@ const Register: React.FC<DrawerSliderProps> = () => {
 
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <FForm onSubmit={onsubmit}>
-          
+          <Controller name="profileImage" render={({field: {onChange, value, ...field}}) => (
+            <Form.Item label={"Profile Image"}>
+              <Input type="file" value={value?.fileName} {...field} placeholder={"Enter your bookimage"} onChange={(e) => onChange(e.target.files?.[0])} />
+            </Form.Item>
+          )} />
           <FInput type="text" name="name" label={"Name"} placeholder={"Enter your name"} />
 
-          <FInput type="text" name="useremail" label={"Email"} placeholder={"Enter your email"} />
+          <FInput type="text" name="email" label={"Email"} placeholder={"Enter your email"} />
 
           <FInput type="password" name="password" label={"Password"} placeholder={"Enter your password"} />
 
