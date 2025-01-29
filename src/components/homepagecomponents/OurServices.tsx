@@ -1,6 +1,6 @@
 import { AiFillAccountBook } from "react-icons/ai";
 
-const OurServices = () => {
+const OurServicesSection = () => {
   return (
     <div className="text-white bg-green-700/40 flex flex-col gap-8 items-center text-center p-20 justify-center">
         <div className="flex flex-col gap-4 items-center">
@@ -13,4 +13,4 @@ const OurServices = () => {
   )
 }
 
-export default OurServices
+export default OurServicesSection

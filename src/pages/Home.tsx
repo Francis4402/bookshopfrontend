@@ -4,7 +4,7 @@ import BookPromotionEvents from "../components/homepagecomponents/BookPromotionE
 import Carousels from "../components/homepagecomponents/Carousel"
 import CategoryButtons from "../components/homepagecomponents/CategoryButtons"
 import LogoGrids from "../components/homepagecomponents/LogoGrids"
-import OurServices from "../components/homepagecomponents/OurServices"
+import OurServicesSection from "../components/homepagecomponents/OurServices"
 import OurservicesAuthor from "../components/homepagecomponents/OurservicesAuthor"
 
 
@@ -16,7 +16,7 @@ const Home = () => {
         <CategoryButtons/>
         <AllBooks/>
         <div className="bg-[url('/bgimage.png')] bg-center bg-cover bg-fixed w-full h-full">
-          <OurServices/>
+          <OurServicesSection/>
         </div>
         <OurservicesAuthor/>
         <AutoGraphysection/>

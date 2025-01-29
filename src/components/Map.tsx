@@ -7,10 +7,6 @@ const Map = () => {
         googleMapsApiKey: 'AIzaSyB2Nc8a3Qg4IG__s_TOrDU0m1M8ka2-njI',
     })
 
-    const containerStyle = {
-        width: '100%',
-        height: '100%',
-    }
       
     const center = {
         lat: 22.402022,
@@ -19,7 +15,7 @@ const Map = () => {
 
   return isLoaded ? <>
     <GoogleMap
-      mapContainerStyle={containerStyle}
+      mapContainerStyle={{ width: "100%", height: "444px" }}
       center={center}
       zoom={12}
     >

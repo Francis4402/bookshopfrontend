@@ -14,15 +14,15 @@ export const PageProps: MenuProps['items'] = [
       {
         key: '3',
         label: (
-          <Link to={"/"}>
-            Our Events
+          <Link to={"/ourservices"}>
+            Our Services
           </Link>
         ),
       },
       {
         key: '4',
         label: (
-          <Link to={"/"}>
+          <Link to={"/contact"}>
             Contact Us
           </Link>
         ),
@@ -30,7 +30,7 @@ export const PageProps: MenuProps['items'] = [
       {
         key: '5',
         label: (
-          <Link to={"/"}>
+          <Link to={"/faqpage"}>
             FAQ Page
           </Link>
         )
@@ -41,7 +41,7 @@ export const ShopProps: MenuProps['items'] = [
   {
     key: '1',
     label: (
-      <Link to="/">
+      <Link to="/allproducts">
         All Products
       </Link>
     ),
@@ -49,7 +49,7 @@ export const ShopProps: MenuProps['items'] = [
   {
     key: '2',
     label: (
-      <Link to={"/"}>
+      <Link to={"/cart"}>
         Cart
       </Link>
     ),
@@ -57,7 +57,7 @@ export const ShopProps: MenuProps['items'] = [
   {
     key: '3',
     label: (
-      <Link to={"/"}>
+      <Link to={"/checkout"}>
         Checkout
       </Link>
     ),

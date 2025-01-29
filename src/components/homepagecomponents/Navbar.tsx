@@ -34,8 +34,7 @@ const Navbar = () => {
               </Dropdown>
 
               <Link to="/events">Events</Link>
-
-              <Link to="/">Blog</Link>
+              
 
               <Dropdown menu={{ items: ShopProps, style: {width: "150px", padding: "10px"}}}>
                 <a onClick={(e) => e.preventDefault()} style={{ cursor: "pointer"}}>

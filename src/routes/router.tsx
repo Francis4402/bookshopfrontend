@@ -9,6 +9,13 @@ import ProtectedRoute from "./ProtectedRoute";
 import MainLayout from "../pages/layouts/MainLayout";
 import Home from "../pages/Home";
 import EventsPage from "../pages/HomePages/EventsPage";
+import OurServices from "../pages/HomePages/OurServices";
+import ContactPage from "../pages/HomePages/ContactPage";
+import FAQPage from "../pages/HomePages/FAQPage";
+import AllProducts from "../pages/HomePages/AllProducts";
+import Cart from "../pages/HomePages/Cart";
+import CheckOut from "../pages/HomePages/CheckOut";
+
 
 
 const route = createBrowserRouter([
@@ -27,6 +34,30 @@ const route = createBrowserRouter([
             {
                 path: "/events",
                 element: <EventsPage/>
+            },
+            {
+                path: "/ourservices",
+                element: <OurServices/>
+            },
+            {
+                path: "/allproducts",
+                element: <AllProducts/>
+            },
+            {
+                path: "/contact",
+                element: <ContactPage/>
+            },
+            {
+                path: "/faqpage",
+                element: <FAQPage/>
+            },
+            {
+                path: "/cart",
+                element: <Cart/>
+            },
+            {
+                path: "/checkout",
+                element: <CheckOut/>
             },
             {
                 path: '/login',
