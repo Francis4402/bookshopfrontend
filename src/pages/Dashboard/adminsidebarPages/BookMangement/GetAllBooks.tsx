@@ -1,17 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetAllBooksQuery } from "../../../../redux/features/books/bookManagementApi";
 import { TQueryParams } from "../../../../types";
 import { TBookstypes } from "../../../../redux/features/books/bookstypes";
-import { Table, TableColumnsType, TableProps } from "antd";
+import { Button, Spin, Table, TableColumnsType, TableProps } from "antd";
 
 
 const GetAllBooks = () => {
 
   const [params, setParams] = useState<TQueryParams[] | undefined>(undefined);
 
-    const {data: semesterData, isLoading, isFetching } = useGetAllBooksQuery(params);
+    const {data: semesterData, isLoading, isFetching, refetch } = useGetAllBooksQuery(params);
 
     console.log({ isLoading, isFetching});
+
+
+    useEffect(() => {
+      if(params) {
+        refetch();
+      }
+    }, [params, refetch]);
 
     const tableData = semesterData?.data?.map(
       ({product_id, title, bookImage, author, price, category, description, quantity, inStock}) => ({
@@ -101,7 +108,22 @@ const GetAllBooks = () => {
   }
 
   return (
-    <Table loading={isLoading} columns={columns} dataSource={tableData} onChange={onchange} scroll={{ x: "max-content"}} />
+    <div>
+      <div style={{ marginBottom: 16, display: "flex", justifyContent: "space-between" }}>
+        <h2>Book List</h2>
+        <Button onClick={refetch} loading={isFetching} type="primary">
+          Refresh
+        </Button>
+      </div>
+      {isFetching && <Spin style={{ display: "block", marginBottom: 16 }} />}
+      <Table
+        loading={isLoading}
+        columns={columns}
+        dataSource={tableData}
+        onChange={onchange}
+        scroll={{ x: "max-content" }}
+      />
+    </div>
   )
 }
 

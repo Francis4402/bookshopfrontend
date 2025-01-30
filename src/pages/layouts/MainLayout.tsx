@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -13,12 +13,27 @@ import { toast } from 'sonner';
 
 
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 
 const MainLayout = () => {
 
     const [collapsed, setCollapsed] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+    
+
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth < 768);
+        if(window.innerWidth < 768) {
+          setCollapsed(true);
+        }
+      };
+
+      handleResize();
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const {
         token: { colorBgContainer, borderRadiusLG },
@@ -34,20 +49,22 @@ const MainLayout = () => {
 
   return (
     <Layout hasSider style={{ height: '100%' }}>
-      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} isMobile={isMobile} />
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        {!isMobile && (
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
             style={{
-              fontSize: '16px',
+              fontSize: "16px",
               width: 64,
               height: 64,
             }}
           />
-          <p className='text-lg font-bold font-serif'>Admin Dashboard</p>
+        )}
+          <p className='sm:text-lg sm:pl-0 pl-5 font-bold font-serif'>Admin Dashboard</p>
             <Button type="primary" onClick={handleLogout} style={{marginRight: '20px'}}>
                 Logout
             </Button>
@@ -64,9 +81,6 @@ const MainLayout = () => {
             <Outlet />
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
       </Layout>
     </Layout>
   )

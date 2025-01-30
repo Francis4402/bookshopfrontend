@@ -5,21 +5,21 @@ import { adminSidebarItems } from "../../routes/adminRoutes/admin_routes";
 
 
 const siderStyle: React.CSSProperties = {
-  overflow: 'auto',
-  height: '100vh',
-  position: 'sticky',
+  overflow: "auto",
+  height: "100vh",
+  position: "sticky",
   insetInlineStart: 0,
   top: 0,
   bottom: 0,
-  scrollbarWidth: 'thin',
-  scrollbarGutter: 'stable',
+  scrollbarWidth: "thin",
+  scrollbarGutter: "stable",
 };
 
 
-const Sidebar = ({ collapsed }: { collapsed: boolean; setCollapsed: (value: boolean) => void }) => {
+const Sidebar = ({ collapsed, isMobile }: {isMobile: boolean; collapsed: boolean; setCollapsed: (value: boolean) => void }) => {
 
   return (
-    <Sider style={siderStyle} trigger={null} collapsible collapsed={collapsed}>
+    <Sider style={siderStyle} trigger={null} collapsible={!isMobile} collapsed={collapsed}>
         <div style={{color: 'white', alignItems: 'center', height: '4rem', display: 'flex'}}>
             
         </div>

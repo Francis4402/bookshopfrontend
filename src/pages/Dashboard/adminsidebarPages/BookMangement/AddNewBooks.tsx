@@ -1,38 +1,47 @@
-import { Controller, FieldValues } from "react-hook-form"
+import { Controller, FieldValues, SubmitHandler } from "react-hook-form"
 import FForm from "../../../../components/form/FForm";
 import FInput from "../../../../components/form/FInput";
-import { Button, Form, Input } from "antd";
+import { Button, Col, Form, Input, Row } from "antd";
 import FSelect from "../../../../components/form/FSelect";
 import { BookCategoryOptions, inStockOptions } from "../../../constants/BookCategoryOptions";
 import { useAddBooksMutation } from "../../../../redux/features/books/bookManagementApi";
 import { toast } from "sonner";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { booksSchema } from "../../../../schemas/booksSchema";
+import FTextArea from "../../../../components/form/FTextArea";
+import FInputNumber from "../../../../components/form/FInputNumber";
+
 
 
 const AddNewBooks = () => {
 
   const [addBooks] = useAddBooksMutation();
 
-  const handleSubmit = async (data: FieldValues) => {
-    console.log(data);
+  const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
 
-    const bookdata = {
-      product_id: data.product_id,
-      title: data.title,
-      bookImage: data.bookImage,
-      author: data.author,
-      price: data.price,
-      category: data.category,
-      description: data.description,
-      quantity: data.quantity,
-      inStock: data.inStock,
-    };
+    const formData = new FormData();
+
+    formData.append('product_id', data.product_id);
+    formData.append('title', data.title);
+    formData.append('author', data.author);
+    formData.append('price', data.price);
+    formData.append('category', data.category);
+    formData.append('description', data.description);
+    formData.append('quantity', data.quantity);
+    formData.append('inStock', data.inStock);
     
+    formData.append('booksImage', data.bookImage);
 
+    formData.append('data', JSON.stringify(data));
+
+ 
+
+    console.log(Object.fromEntries(formData));
 
     try {
-      const res = await addBooks(bookdata);
+      const res = await addBooks(formData);
       console.log(res);
-      
+      toast.success('Book Data Stored Successfully')
     } catch (error) {
       toast.error("Something went wrong");
     }
@@ -40,21 +49,59 @@ const AddNewBooks = () => {
 
   return (
     <div>
-      <FForm onSubmit={handleSubmit}>
-      <FInput type="text" name="product_id" label={"Product ID"} placeholder={"Enter your product id"} />
-        <FInput type="text" name="title" label={"Title"} placeholder={"Enter your title"} />
-        <Controller name="bookImage" render={({field: {onChange, value, ...field}}) => (
-          <Form.Item label={"Book Image"}>
-            <Input type="file" value={value?.fileName} {...field} placeholder={"Enter your bookimage"} onChange={(e) => onChange(e.target.files?.[0])} />
-          </Form.Item>
-        )} />
-        <FInput type="text" name="author" label={"Author"} placeholder={"Enter your author"} />
-        <FInput type="number" name="price" label={"Price"} placeholder={"Enter your Price"} />
-        <FInput type="number" name="quantity" label={"Quantity"} placeholder={"Enter your quantity"} />
-        <FSelect label={"In Stock"} name={"inStock"} options={inStockOptions} />
-        <FSelect label={"Category"} name={"category"} options={BookCategoryOptions} />
-        <Button htmlType="submit">Submit</Button>
-      </FForm>
+      <Row justify={"center"}>
+        <Col span={24}>
+          <FForm onSubmit={handleSubmit} resolver={zodResolver(booksSchema)}>
+            <p className="mb-10 sm:text-2xl font-semibold text-xs">Add A New Book</p>
+
+            <Row gutter={8}>
+              <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+                <FInputNumber name="product_id" label={"Product ID"} placeholder={"Enter your product id"} />
+              </Col>
+
+              <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+                <FInput type="text" name="title" label={"Title"} placeholder={"Enter your title"} />
+              </Col>
+
+              <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+                <Controller name="bookImage" render={({field: {onChange, value, ...field}, fieldState: {error}}) => (
+                    <Form.Item label={"Book Image"}>
+                      <Input type="file" value={value?.filename} {...field} placeholder={""} onChange={(e) => onChange(e.target.files?.[0])} />
+                      {error && <small style={{color: 'red'}}>{error.message}</small>}
+                    </Form.Item>
+                  )} />
+              </Col>
+
+              <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+                <FInput type="text" name="author" label={"Author"} placeholder={"Enter your author"} />
+              </Col>
+
+              <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+                <FTextArea name="description" rows={4} label={"Description"} placeholder={"Enter your description"} />
+              </Col>
+
+              <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+                <FInputNumber name="price" label={"Price"} placeholder={"Enter your Price"} />
+              </Col>
+
+              <Col span={12} md={{ span: 12 }} lg={{ span: 8 }}>
+                <FInputNumber name="quantity" label={"Quantity"} placeholder={"Enter your quantity"} />
+              </Col>
+
+              <Col span={12} md={{ span: 12 }} lg={{ span: 8 }}>
+                <FSelect label={"In Stock"} name={"inStock"} options={inStockOptions} />
+              </Col>
+
+              <Col span={12} md={{ span: 12 }} lg={{ span: 8 }}>
+                <FSelect label={"Category"} name={"category"} options={BookCategoryOptions} />
+              </Col>
+            </Row>
+            
+            
+            <Button htmlType="submit" type="primary" style={{width: '50%'}}>Submit</Button>
+          </FForm>
+        </Col>
+      </Row>
     </div>
   )
 }

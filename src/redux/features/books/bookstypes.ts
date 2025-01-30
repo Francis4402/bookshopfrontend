@@ -1,7 +1,7 @@
 export type TBookstypes = {
     product_id: number;
     title: string;
-    bookImage?: string;
+    bookImage: string;
     author: string;
     price: number;
     category: 'Fiction' | 'Science' | 'SoftwareDevelopment' | 'Poetry' | 'Story';

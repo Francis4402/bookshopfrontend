@@ -34,7 +34,6 @@ const Register: React.FC<DrawerSliderProps> = () => {
     formData.append('data', JSON.stringify(data));
     formData.append('file', data.profileImage);
 
-    console.log(Object.fromEntries(formData));
     
     try {
       await register(formData).unwrap();
@@ -45,7 +44,7 @@ const Register: React.FC<DrawerSliderProps> = () => {
       dispatch(setUser({user: loginRes.data.user, token: loginRes.data.accessToken}));
 
       navigate('/');
-      
+
     } catch (error) {
       toast.error("Something went wrong");
     }
