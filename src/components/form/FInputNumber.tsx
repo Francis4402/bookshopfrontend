@@ -4,7 +4,7 @@ import { Controller } from "react-hook-form";
 type TInputNumberProps = {
     name: string;
     label: string;
-    placeholder?: string;
+    placeholder: string | number;
 };
 
 const FInputNumber = ({ name, label, placeholder }: TInputNumberProps) => {
@@ -18,7 +18,7 @@ const FInputNumber = ({ name, label, placeholder }: TInputNumberProps) => {
                             id={name}
                             value={value}
                             onChange={onChange}
-                            placeholder={placeholder}
+                            placeholder={placeholder.toString()}
                             style={{ width: "100%" }}
                         />
                     </Form.Item>

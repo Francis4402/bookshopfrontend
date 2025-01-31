@@ -5,7 +5,7 @@ type TInputProps = {
     type: string;
     name: string;
     label: string;
-    placeholder: string;
+    placeholder?: string;
 }
 
 const FInput = ({ type, name, label, placeholder}: TInputProps) => {

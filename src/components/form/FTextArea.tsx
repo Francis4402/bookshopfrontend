@@ -6,7 +6,7 @@ type TInputProps = {
     rows: number
     name: string;
     label: string;
-    placeholder: string;
+    placeholder?: string;
 }
 
 const FTextArea = ({ name, label, placeholder}: TInputProps) => {

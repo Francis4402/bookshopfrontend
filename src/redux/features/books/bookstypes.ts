@@ -1,5 +1,7 @@
 export type TBookstypes = {
-    product_id: number;
+    _id: string;
+    key: string;
+    product_id: string;
     title: string;
     bookImage: string;
     author: string;

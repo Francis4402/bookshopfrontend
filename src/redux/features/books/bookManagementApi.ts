@@ -34,8 +34,32 @@ const bookManagementApi =  baseApi.injectEndpoints({
                 method: 'POST',
                 body: data,
             })
-        })
+        }),
+        getSingleBook: builder.query({
+            query: (id: string) => ({
+                url: `/products/${id}`,
+                method: 'GET',
+            }),
+            transformResponse: (response: TResponseRedux<TBookstypes>) => {
+                return response.data;
+            }
+        }),
+        updateBook: builder.mutation({
+            query: ({ id, data }) => ({
+              url: `/products/${id}`,
+              method: 'PUT',
+              body: data,
+            }),
+          }),
+        deleteBooks: builder.mutation({
+            query: (args) => ({
+                url: `/products/${args.id}`,
+                method: "DELETE",
+                body: args.data,
+            })
+        }),
+        
     })
 });
 
-export const { useGetAllBooksQuery, useAddBooksMutation } = bookManagementApi;
+export const { useGetAllBooksQuery, useAddBooksMutation, useGetSingleBookQuery, useUpdateBookMutation, useDeleteBooksMutation } = bookManagementApi;

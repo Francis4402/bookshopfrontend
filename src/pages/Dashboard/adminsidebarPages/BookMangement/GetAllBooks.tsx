@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
-import { useGetAllBooksQuery } from "../../../../redux/features/books/bookManagementApi";
+import { useDeleteBooksMutation, useGetAllBooksQuery } from "../../../../redux/features/books/bookManagementApi";
 import { TQueryParams } from "../../../../types";
 import { TBookstypes } from "../../../../redux/features/books/bookstypes";
-import { Button, Spin, Table, TableColumnsType, TableProps } from "antd";
+import { Button, Collapse, Spin, Table, TableColumnsType, TableProps } from "antd";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 
 const GetAllBooks = () => {
 
   const [params, setParams] = useState<TQueryParams[] | undefined>(undefined);
 
-    const {data: semesterData, isLoading, isFetching, refetch } = useGetAllBooksQuery(params);
+    const {data: bookData, isLoading, isFetching, refetch } = useGetAllBooksQuery(params);
 
-    console.log({ isLoading, isFetching});
+    const [deleteBooks] = useDeleteBooksMutation();
+
+
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -20,10 +25,24 @@ const GetAllBooks = () => {
       }
     }, [params, refetch]);
 
-    const tableData = semesterData?.data?.map(
-      ({product_id, title, bookImage, author, price, category, description, quantity, inStock}) => ({
-      key: product_id,
-      product_id,
+    const handleDelete = async (id: string) => {
+      try {
+        await deleteBooks({ id }).unwrap();
+        toast.success("Book deleted successfully");
+        refetch();
+      } catch (error) {
+        toast.error("Failed to delete book");
+      }
+    };
+
+    const handleNavigate = (id: string) => {
+      navigate(`/admin/update-products/${id}`);
+    };
+
+
+    const tableData = bookData?.data?.map(
+      ({_id, title, bookImage, author, price, category, description, quantity, inStock}) => ({
+      key: _id,
       title,
       bookImage,
       author,
@@ -66,12 +85,25 @@ const GetAllBooks = () => {
     {
       title: "Category",
       dataIndex: "category",
-      responsive: ["md", "lg", "xl"],
+      responsive: ["sm", "md", "lg", "xl"],
     },
     {
       title: "Description",
       dataIndex: "description",
-      responsive: ["lg", "xl"],
+      responsive: ["xs", "sm", "md", "lg", "xl"],
+      render: (text) => (
+        <Collapse
+          ghost
+          style={{ width: "200px" }}
+          items={[
+            {
+              key: "1",
+              label: text.length > 10 ? `${text.slice(0, 10)}...` : text,
+              children: <p>{text}</p>,
+            },
+          ]}
+        />
+      ),
     },
     {
       title: "Quantity",
@@ -83,6 +115,15 @@ const GetAllBooks = () => {
       dataIndex: "inStock",
       responsive: ["xs", "sm", "md", "lg", "xl"],
       render: (value) => (value ? "Yes" : "No"),
+    },
+    {
+      title: "Action",
+      render: (_, data) => (
+        <div className="flex gap-2">
+          <Button onClick={() => handleNavigate(data.key)}>Update</Button>
+          <Button danger onClick={() => handleDelete(data.key)}>Delete</Button>
+        </div>
+      ),
     },
   ];
 
@@ -119,7 +160,7 @@ const GetAllBooks = () => {
       <Table
         loading={isLoading}
         columns={columns}
-        dataSource={tableData}
+        dataSource={tableData as readonly TBookstypes[] | undefined}
         onChange={onchange}
         scroll={{ x: "max-content" }}
       />

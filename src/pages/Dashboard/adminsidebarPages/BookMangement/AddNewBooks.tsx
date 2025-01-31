@@ -4,18 +4,23 @@ import FInput from "../../../../components/form/FInput";
 import { Button, Col, Form, Input, Row } from "antd";
 import FSelect from "../../../../components/form/FSelect";
 import { BookCategoryOptions, inStockOptions } from "../../../constants/BookCategoryOptions";
-import { useAddBooksMutation } from "../../../../redux/features/books/bookManagementApi";
+import { useAddBooksMutation, useGetAllBooksQuery } from "../../../../redux/features/books/bookManagementApi";
 import { toast } from "sonner";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { booksSchema } from "../../../../schemas/booksSchema";
 import FTextArea from "../../../../components/form/FTextArea";
 import FInputNumber from "../../../../components/form/FInputNumber";
+import { useNavigate } from "react-router-dom";
 
 
 
 const AddNewBooks = () => {
 
   const [addBooks] = useAddBooksMutation();
+
+  const {refetch} = useGetAllBooksQuery(undefined);
+
+  const navigate = useNavigate();
 
   const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
 
@@ -42,6 +47,8 @@ const AddNewBooks = () => {
       const res = await addBooks(formData);
       console.log(res);
       toast.success('Book Data Stored Successfully')
+      navigate('/admin/get-products');
+      refetch();
     } catch (error) {
       toast.error("Something went wrong");
     }
@@ -56,7 +63,7 @@ const AddNewBooks = () => {
 
             <Row gutter={8}>
               <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-                <FInputNumber name="product_id" label={"Product ID"} placeholder={"Enter your product id"} />
+                <FInput type="text" name="product_id" label={"Product ID"} placeholder={"Enter your product id"} />
               </Col>
 
               <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
