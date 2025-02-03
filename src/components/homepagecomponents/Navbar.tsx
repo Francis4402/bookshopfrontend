@@ -7,7 +7,8 @@ import { Dropdown, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { PageProps, ShopProps } from "../Navmenuprops/NavMenuProps";
-
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import logo from '/logo.png';
 
 
 const Navbar = () => {
@@ -15,11 +16,11 @@ const Navbar = () => {
   return (
     <div>
       <Topnav/>
-      <div className="container mx-auto items-center">
+      <div className="container mx-auto items-center md:px-0 px-5">
         <div className="flex justify-between items-center h-30">
           <div className="flex gap-16 items-center">
             <Link to={"/"}>
-              <img src="./logo.png" alt="logo" height={50} width={50}/>
+              <LazyLoadImage effect="blur" src={logo} alt="logo" height={50} width={50}/>
             </Link>
             <div className="md:flex gap-4 font-serif hidden">
               <Link to="/">Home</Link>
@@ -49,11 +50,13 @@ const Navbar = () => {
           </div>
 
           <div className="flex gap-4 items-center">
-            <MdOutlineShoppingBag size={25} />
-            <p className="text-sm">$0.00</p>
-            |
-            <HiMagnifyingGlass size={25} />
-            |
+            <div className="md:flex hidden gap-4 items-center">
+              <MdOutlineShoppingBag size={25} />
+              <p className="text-sm">$0.00</p>
+              |
+              <HiMagnifyingGlass size={25} />
+              |
+            </div>
             <DrawerSlider trigger={<FaBars size={20} className="cursor-pointer" />} />
           </div>
         </div>

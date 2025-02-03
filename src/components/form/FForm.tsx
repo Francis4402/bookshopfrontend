@@ -36,7 +36,7 @@ const FForm = ({ onSubmit, children, defaultValues, resolver }: TFormProps) => {
 
   return (
     <FormProvider {...methods}>
-        <Form layout="vertical" onFinish={methods.handleSubmit(onsubmit)}>
+        <Form layout="vertical" onFinish={methods.handleSubmit(onsubmit)} className="w-full">
             {children}
         </Form>
     </FormProvider>

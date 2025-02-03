@@ -14,14 +14,16 @@ const RelatedProductcard = () => {
     };
 
   return (
-    <div className='grid lg:grid-cols-4 md:grid-cols-2 gap-5 mb-28'>
+    <div>
+      
+      <div className='grid lg:grid-cols-4 md:grid-cols-2 justify-center items-center gap-5 my-28'>
         {isLoading ? 
         <div className='flex justify-center items-center w-full'>
             <Spin/>
         </div> : 
         bookData?.data?.map(
           ({_id, title, bookImage, author, price, category, inStock}) => (
-            <Card key={_id} onClick={() => handleNavigate(_id, title)} hoverable style={{ width: 300 }} cover={<img alt="example" src={bookImage} className='w-full h-96 object-cover' />}>
+            <Card key={_id} onClick={() => handleNavigate(_id, title)} hoverable cover={<img alt="example" src={bookImage} className='w-full h-96 object-cover' />}>
                 <div className='flex justify-between items-center'>
                     <p className='text-gray-400'>{author}</p>
                     <p className='font-semibold'>{category}</p>
@@ -37,6 +39,7 @@ const RelatedProductcard = () => {
             </Card>
           )
         )}
+      </div>
     </div>
   )
 }

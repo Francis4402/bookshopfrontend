@@ -2,10 +2,10 @@
 
 const OurservicesAuthor = () => {
   return (
-    <div className="flex flex-col font-serif gap-5 text-center items-center justify-center my-28">
+    <div className="flex flex-col lg:gap-5 gap-2 justify-center items-center my-28">
         <p className="text-sm text-gray-400">OUR SERVICES</p>
-        <h1 className="text-4xl">Authors of the month</h1>
-        <p className="text-gray-500">Our bookstore proudly supports authors by showcasing their works and providing a platform to connect with readers. From book signings to author spotlights, we celebrate the creativity behind every story.</p>
+        <h1 className="md:text-4xl text-xl">Authors of the month</h1>
+        <p className="text-gray-500 max-w-4xl text-center">Our bookstore proudly supports authors by showcasing their works and providing a platform to connect with readers. From book signings to author spotlights, we celebrate the creativity behind every story.</p>
 
         <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-20 mt-10">
             <div className="flex flex-col gap-4 text-center items-center justify-center">

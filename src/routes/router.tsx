@@ -16,6 +16,9 @@ import AllProducts from "../pages/HomePages/AllProducts";
 import Cart from "../pages/HomePages/Cart";
 import CheckOut from "../pages/HomePages/CheckOut";
 import BookDetailspage from "../pages/detailpages/BookDetailspage";
+import NotFoundPage from "../pages/404pages/NotFoundPage";
+
+
 
 
 
@@ -54,7 +57,7 @@ const route = createBrowserRouter([
             },
             {
                 path: '/:productname/:id',
-                element: <BookDetailspage/>
+                element: <BookDetailspage/>,
             },
             {
                 path: "/cart",
@@ -79,6 +82,10 @@ const route = createBrowserRouter([
         element: <ProtectedRoute role="admin"><MainLayout/></ProtectedRoute>,
         children: routeGenerator(adminPaths),
     },
+    {
+        path: '/*',
+        element: <NotFoundPage/>
+    }
     
 ]);
 

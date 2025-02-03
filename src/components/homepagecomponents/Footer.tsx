@@ -26,7 +26,7 @@ const Footer = () => {
             </div>
         </div>
 
-        <div className="bg-black py-5 items-center text-center text-white">
+        <div className="bg-black md:px-0 px-5 py-5 items-center text-center text-white">
             @ 2025 QODE INTERACTIVE, ALL RIGHTS RESERVED
         </div>
     </div>

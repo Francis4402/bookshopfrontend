@@ -1,4 +1,5 @@
 
+import { LazyLoadImage } from "react-lazy-load-image-component"
 import BookPromotionEvents from "../../components/homepagecomponents/BookPromotionEvents"
 import Map from "../../components/Map"
 
@@ -22,7 +23,7 @@ const EventsPage = () => {
 
             <div className="flex flex-col gap-10">
                 <div className="grid lg:grid-cols-2 gap-10">
-                    <img src="eventsingleimage1.jpg" alt="i" />
+                    <LazyLoadImage effect="blur" src="eventsingleimage1.jpg" alt="i" />
                     
                     <Map/>
                 </div>

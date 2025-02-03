@@ -4,7 +4,7 @@ const BookPromotionEvents = () => {
   return (
     <div className="flex flex-col text-center gap-5 items-center justify-center">
         <p className="text-gray-400">EVENTS</p>
-        <h1 className="text-4xl font-serif">Book Promotion Events</h1>
+        <h1 className="md:text-4xl text-xl font-serif">Book Promotion Events</h1>
         <p className="text-gray-500">Explore exclusive discounts, limited-time offers, and new arrivals during our special book promotion event.</p>
         
         <div className="my-20 flex flex-col gap-10">
