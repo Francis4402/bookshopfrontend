@@ -8,7 +8,7 @@ import { Button, Layout, theme } from 'antd';
 import { useAppDispatch } from '../../redux/hooks';
 import { logout } from '../../redux/features/auth/authSlice';
 import Sidebar from '../layouts/Sidebar';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 
@@ -20,6 +20,12 @@ const MainLayout = () => {
 
     const [collapsed, setCollapsed] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+
+    const navigate = useNavigate();
+
+    const handleNavigate = () => {
+      navigate('/');
+    }
     
 
     useEffect(() => {
@@ -65,9 +71,15 @@ const MainLayout = () => {
           />
         )}
           <p className='sm:text-lg sm:pl-0 pl-5 font-bold font-serif'>Admin Dashboard</p>
-            <Button type="primary" onClick={handleLogout} style={{marginRight: '20px'}}>
-                Logout
-            </Button>
+            <div>
+              <Button type="primary" onClick={handleNavigate}  style={{marginRight: '20px'}}>
+                  Home
+              </Button>
+
+              <Button type="primary" onClick={handleLogout} style={{marginRight: '20px'}}>
+                  Logout
+              </Button>
+            </div>
         </Header>
         <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
           <div

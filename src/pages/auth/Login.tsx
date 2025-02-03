@@ -1,11 +1,13 @@
 import { FieldValues } from 'react-hook-form';
 import { useLoginMutation } from '../../redux/features/auth/authApi';
 import { useAppDispatch } from '../../redux/hooks';
-import { setUser } from '../../redux/features/auth/authSlice';
+import { setUser, TUser } from '../../redux/features/auth/authSlice';
 import { toast } from 'sonner';
 import { Link, useNavigate } from 'react-router-dom';
 import FInput from '../../components/form/FInput';
 import FForm from '../../components/form/FForm';
+import { verifyToken } from '../../utils/verifyToken';
+
 
 
 interface DrawerSliderProps {
@@ -30,11 +32,17 @@ const Login: React.FC<DrawerSliderProps> = () => {
 
       const res = await login(userInfo).unwrap();
 
-      dispatch(setUser({user: {}, token: res.data.accessToken}));
+      const user = verifyToken(res.data.accessToken) as TUser;
+
+      dispatch(setUser({user: user, token: res.data.accessToken}));
 
       toast.success("Login Successful");
 
-      navigate('/');
+      if(user.role === 'admin') {
+        navigate(`/${user.role}`);
+      } else {
+        navigate('/');
+      }
 
     } catch (error) {
       toast.error('Invalid Credentials');

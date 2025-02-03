@@ -1,6 +1,6 @@
 import { TQueryParams, TResponseRedux } from "../../../types";
 import { baseApi } from "../../api/baseApi";
-import { TBookstypes } from "./bookstypes";
+import { TBookstypes } from "../../../types/bookstypes";
 
 
 const bookManagementApi =  baseApi.injectEndpoints({

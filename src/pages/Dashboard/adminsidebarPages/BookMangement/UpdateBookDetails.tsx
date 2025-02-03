@@ -1,5 +1,5 @@
 import { Button, Col, Form, Input, Row } from "antd";
-import { Controller, FieldValues } from "react-hook-form";
+import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
 import FForm from "../../../../components/form/FForm";
 import FInput from "../../../../components/form/FInput";
 import FTextArea from "../../../../components/form/FTextArea";
@@ -8,10 +8,8 @@ import FSelect from "../../../../components/form/FSelect";
 import { BookCategoryOptions, inStockOptions } from "../../../constants/BookCategoryOptions";
 import { useParams } from "react-router-dom";
 import { useGetSingleBookQuery, useUpdateBookMutation } from "../../../../redux/features/books/bookManagementApi";
+import { TBookstypes } from "../../../../types";
 import { toast } from "sonner";
-import { TBookstypes } from "../../../../redux/features/books/bookstypes";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { booksSchema } from "../../../../schemas/booksSchema";
 
 
 
@@ -27,29 +25,33 @@ const UpdateBookDetails = () => {
   const [updateBook] = useUpdateBookMutation();
 
 
-  const handleUpdateSubmit = async (data: FieldValues) => {
+  const handleUpdateSubmit: SubmitHandler<FieldValues> = async (data) => {
+
     const formData = new FormData();
 
-    formData.append('product_id', data.product_id);
-    formData.append('title', data.title);
-    formData.append('author', data.author);
-    formData.append('price', data.price);
-    formData.append('category', data.category);
-    formData.append('description', data.description);
-    formData.append('quantity', data.quantity);
-    formData.append('inStock', data.inStock);
+    formData.append('data', JSON.stringify({
+      product_id: data.product_id,
+      title: data.title,
+      author: data.author,
+      description: data.description,
+      price: data.price,
+      quantity: data.quantity,
+      inStock: data.inStock,
+      category: data.category,
+    }));
 
-    formData.append('booksImage', data.bookImage);
-
-    formData.append('data', JSON.stringify(data));
+    if (data.bookImage) {
+      formData.append('booksImage', data.bookImage);
+    }
 
 
     try {
-      const res = await updateBook({id: book?._id, formData}).unwrap();
-      console.log(res);
-      toast.success('Book Data Stored Successfully')
+      const res = await updateBook({ id: book?._id, data: formData }).unwrap();
+      console.log('Update Response:', res);
+      toast.success('Book updated successfully');
     } catch (error) {
-      toast.error("Something went wrong");
+      console.error('Failed to update book:', error);
+      toast.error('Failed to update book');
     }
   };
 
@@ -57,8 +59,8 @@ const UpdateBookDetails = () => {
     <div>
       <Row justify={"center"}>
         <Col span={24}>
-          <FForm onSubmit={handleUpdateSubmit} resolver={zodResolver(booksSchema)}>
-            <p className="mb-10 sm:text-2xl font-semibold text-xs">Update Books</p>
+          <FForm onSubmit={handleUpdateSubmit}>
+            <p className="mb-10 sm:text-2xl font-semibold text-xs">{book?.title}</p>
 
             <Row gutter={8}>
               <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
@@ -85,6 +87,7 @@ const UpdateBookDetails = () => {
               <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
                 <FTextArea name="description" rows={4} label={"Description"} placeholder={book?.description} />
               </Col>
+
               <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
                 <FInputNumber name="price" label={"Price"} placeholder={book?.price ? book.price.toString() : ''} />
               </Col>

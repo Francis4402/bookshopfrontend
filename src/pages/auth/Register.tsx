@@ -7,6 +7,9 @@ import { toast } from 'sonner';
 import { Form, Input } from 'antd';
 import { useAppDispatch } from '../../redux/hooks';
 import { setUser } from '../../redux/features/auth/authSlice';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { registrationSchema } from '../../schemas/loginRegistrationSchema';
+
 
 interface DrawerSliderProps {
   trigger?: React.ReactNode;
@@ -61,7 +64,7 @@ const Register: React.FC<DrawerSliderProps> = () => {
       </div>
 
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <FForm onSubmit={onsubmit}>
+        <FForm onSubmit={onsubmit} resolver={zodResolver(registrationSchema)}>
           <Controller name="profileImage" render={({field: {onChange, value, ...field}}) => (
             <Form.Item label={"Profile Image"}>
               <Input type="file" value={value?.fileName} {...field} placeholder={"Enter your bookimage"} onChange={(e) => onChange(e.target.files?.[0])} />

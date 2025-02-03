@@ -1,11 +1,9 @@
-import { Card, Spin } from 'antd';
-import { useGetAllBooksQuery } from '../../redux/features/books/bookManagementApi';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { useGetAllBooksQuery } from "../../redux/features/books/bookManagementApi";
+import { Card, Spin } from "antd";
 
 
-
-
-const AllBooks = () => {
+const RelatedProductcard = () => {
 
     const {data: bookData, isLoading } = useGetAllBooksQuery(undefined);
     
@@ -43,4 +41,4 @@ const AllBooks = () => {
   )
 }
 
-export default AllBooks
+export default RelatedProductcard

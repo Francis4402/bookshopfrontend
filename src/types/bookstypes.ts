@@ -6,7 +6,7 @@ export type TBookstypes = {
     bookImage: string;
     author: string;
     price: number;
-    category: 'Fiction' | 'Science' | 'SoftwareDevelopment' | 'Poetry' | 'Story';
+    category: string;
     description: string;
     quantity: number;
     inStock: boolean;

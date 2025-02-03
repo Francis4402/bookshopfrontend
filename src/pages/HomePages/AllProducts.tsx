@@ -4,6 +4,8 @@ import { FaSearch } from "react-icons/fa"
 
 
 const AllProducts = () => {
+
+
   return (
     <div>
         <div className="lg:h-[400px] md:h-[200px] w-full bg-[url('/eventstopimage.jpg')] bg-cover bg-center bg-no-repeat">

@@ -26,22 +26,21 @@ const AddNewBooks = () => {
 
     const formData = new FormData();
 
-    formData.append('product_id', data.product_id);
-    formData.append('title', data.title);
-    formData.append('author', data.author);
-    formData.append('price', data.price);
-    formData.append('category', data.category);
-    formData.append('description', data.description);
-    formData.append('quantity', data.quantity);
-    formData.append('inStock', data.inStock);
+    formData.append('data', JSON.stringify({
+      product_id: data.product_id,
+      title: data.title,
+      author: data.author,
+      description: data.description,
+      price: data.price,
+      quantity: data.quantity,
+      inStock: data.inStock,
+      category: data.category,
+    }));
     
-    formData.append('booksImage', data.bookImage);
-
-    formData.append('data', JSON.stringify(data));
-
+    if (data.bookImage) {
+      formData.append('booksImage', data.bookImage);
+    }
  
-
-    console.log(Object.fromEntries(formData));
 
     try {
       const res = await addBooks(formData);

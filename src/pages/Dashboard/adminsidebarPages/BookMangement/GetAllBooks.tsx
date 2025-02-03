@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDeleteBooksMutation, useGetAllBooksQuery } from "../../../../redux/features/books/bookManagementApi";
-import { TQueryParams } from "../../../../types";
-import { TBookstypes } from "../../../../redux/features/books/bookstypes";
+import { TBookstypes, TQueryParams } from "../../../../types";
 import { Button, Collapse, Spin, Table, TableColumnsType, TableProps } from "antd";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +14,6 @@ const GetAllBooks = () => {
 
     const [deleteBooks] = useDeleteBooksMutation();
 
-
     const navigate = useNavigate();
 
 
@@ -24,6 +22,7 @@ const GetAllBooks = () => {
         refetch();
       }
     }, [params, refetch]);
+
 
     const handleDelete = async (id: string) => {
       try {
@@ -145,7 +144,7 @@ const GetAllBooks = () => {
   };
 
   if(isLoading) {
-    return <p>Loading</p>
+    return <p>Loading...</p>
   }
 
   return (

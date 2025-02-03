@@ -1,6 +1,8 @@
 import { Button, Drawer } from 'antd';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { logout, selectCurrentUser } from '../../redux/features/auth/authSlice';
 
 
 interface DrawerSliderProps {
@@ -8,7 +10,12 @@ interface DrawerSliderProps {
 }
 
 const DrawerSlider: React.FC<DrawerSliderProps> = ({ trigger}) => {
+    
+    const user = useAppSelector(selectCurrentUser);
+
     const [open, setOpen] = useState(false);
+
+    const dispatch = useAppDispatch();
 
     const showDrawer = () => {
         setOpen(true);
@@ -17,6 +24,10 @@ const DrawerSlider: React.FC<DrawerSliderProps> = ({ trigger}) => {
     const onClose = () => {
         setOpen(false);
     };
+
+    const handleLogout = () => {
+        dispatch(logout());
+    }
 
   return (
     <div>
@@ -37,35 +48,59 @@ const DrawerSlider: React.FC<DrawerSliderProps> = ({ trigger}) => {
                 onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#E5E7EB")}
                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}>Home</Link>
 
-                <Link to={'/admin/dashboard'} style={{ 
-                    color: "black",
-                    fontSize: 20,
-                    textDecoration: "none", 
-                    padding: "0.25rem 1rem",
-                    borderRadius: "0.25rem"
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#E5E7EB")}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}>Dashboard</Link>
+                {
+                    user?.role === 'admin' && (
+                        <Link to={'/admin/dashboard'} style={{ 
+                            color: "black",
+                            fontSize: 20,
+                            textDecoration: "none", 
+                            padding: "0.25rem 1rem",
+                            borderRadius: "0.25rem"
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#E5E7EB")}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}>Dashboard</Link>
+                    )
+                }
                 
-                <Link to={'/login'} style={{ 
-                    color: "black",
-                    fontSize: 20,
-                    textDecoration: "none", 
-                    padding: "0.25rem 1rem",
-                    borderRadius: "0.25rem"
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#E5E7EB")}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}>Login</Link>
+                {
+                    !user && (
+                        <>
+                            <Link to={'/login'} style={{ 
+                                color: "black",
+                                fontSize: 20,
+                                textDecoration: "none", 
+                                padding: "0.25rem 1rem",
+                                borderRadius: "0.25rem"
+                            }}
+                            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#E5E7EB")}
+                            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}>Login</Link>
 
-                <Link to={'/register'} style={{ 
-                    color: "black",
-                    fontSize: 20,
-                    textDecoration: "none", 
-                    padding: "0.25rem 1rem",
-                    borderRadius: "0.25rem"
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#E5E7EB")}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}>Register</Link>
+                            <Link to={'/register'} style={{ 
+                                color: "black",
+                                fontSize: 20,
+                                textDecoration: "none", 
+                                padding: "0.25rem 1rem",
+                                borderRadius: "0.25rem"
+                            }}
+                            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#E5E7EB")}
+                            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}>Register</Link>
+                        </>
+                    )
+                }
+
+                {
+                    user && (
+                        <Button onClick={handleLogout} style={{ 
+                            color: "black",
+                            fontSize: 20,
+                            textDecoration: "none", 
+                            padding: "0.25rem 1rem",
+                            borderRadius: "0.25rem"
+                        }}
+                        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#E5E7EB")}
+                        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}>Logout</Button>
+                    )
+                }
             </div>
             
         </Drawer>
