@@ -3,15 +3,31 @@ import { MdOutlineShoppingBag } from "react-icons/md";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { FaBars } from "react-icons/fa6";
 import DrawerSlider from "./DrawerSlider";
-import { Dropdown, Space } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import { Avatar, Dropdown, Space } from "antd";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { PageProps, ShopProps } from "../Navmenuprops/NavMenuProps";
+import { AuthProps, PageProps, ShopProps } from "../Navmenuprops/NavMenuProps";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import logo from '/logo.png';
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { logout, selectCurrentUser } from "../../redux/features/auth/authSlice";
 
 
 const Navbar = () => {
+
+  const user = useAppSelector(selectCurrentUser);
+
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => dispatch(logout());
+
+  console.log(user);
+
+  const menuItems = [
+    { key: 'profile', label: <Link to='/profile'>Profile</Link> },
+    {key: 'dashboard', label: <Link to='/admin/dashboard'>Dashboard</Link>},
+    { key: 'logout', label: <span onClick={handleLogout}>Logout</span> }
+  ];
 
   return (
     <div>
@@ -46,6 +62,19 @@ const Navbar = () => {
                 </a>
               </Dropdown>
 
+              {
+                !user && (
+                  <Dropdown menu={{ items: AuthProps, style: {width: "150px", padding: "10px"}}}>
+                    <a onClick={(e) => e.preventDefault()} style={{ cursor: "pointer"}}>
+                      <Space>
+                        Auth
+                        <DownOutlined />
+                      </Space>
+                    </a>
+                  </Dropdown>
+                )
+              }
+
             </div>
           </div>
 
@@ -57,7 +86,19 @@ const Navbar = () => {
               <HiMagnifyingGlass size={25} />
               |
             </div>
-            <DrawerSlider trigger={<FaBars size={20} className="cursor-pointer" />} />
+            <div className="md:hidden block">
+              <DrawerSlider trigger={<FaBars size={20} className="cursor-pointer" />} />
+            </div>
+            
+            {
+              user && (
+                <Dropdown menu={{ items: menuItems }} placement="bottomRight" trigger={['click']}>
+                    <Avatar style={{ backgroundColor: '#87d068', cursor: 'pointer' }}>
+                      <UserOutlined />
+                    </Avatar>
+                </Dropdown>
+              )
+            }
           </div>
         </div>
       </div>

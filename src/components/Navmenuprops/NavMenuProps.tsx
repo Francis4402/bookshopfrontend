@@ -62,4 +62,23 @@ export const ShopProps: MenuProps['items'] = [
       </Link>
     ),
   },
+];
+
+export const AuthProps: MenuProps['items'] = [
+  {
+    key: '1',
+    label: (
+      <Link to={"/login"}>
+        Login
+      </Link>
+    ),
+  },
+  {
+    key: '2',
+    label: (
+      <Link to={"/register"}>
+        Register
+      </Link>
+    )
+  }
 ]

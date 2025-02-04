@@ -15,7 +15,9 @@ const LogoGrids = () => {
     <div className="grid lg:grid-cols-6 md:grid-cols-2 gap-10 place-items-center my-20">
         {
           logoimages.map((pics) => (
-            <LazyLoadImage effect='blur' src={pics} alt="i" className='w-34' />
+            <div key={pics}>
+              <LazyLoadImage effect='blur' src={pics} alt="i" className='w-34' />
+            </div>
           ))
         }
     </div>

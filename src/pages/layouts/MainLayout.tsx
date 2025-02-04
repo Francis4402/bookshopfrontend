@@ -88,6 +88,7 @@ const MainLayout = () => {
               textAlign: 'center',
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
+              height: '100%',
             }}
           >
             <Outlet />

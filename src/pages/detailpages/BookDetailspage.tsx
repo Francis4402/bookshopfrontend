@@ -31,8 +31,8 @@ const BookDetailspage = () => {
         </div>
 
 
-        <div className="container max-w-5xl mx-auto justify-center items-center md:px-0 px-5 my-28">
-            <div className="flex lg:flex-row flex-col gap-20 items-start">
+        <div className="container mx-auto justify-center items-center md:px-0 px-5 my-28">
+            <div className="flex lg:flex-row flex-col gap-20 items-center">
 
                 <LazyLoadImage
                     effect="blur"
