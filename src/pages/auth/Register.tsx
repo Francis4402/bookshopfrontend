@@ -4,11 +4,13 @@ import { Controller, FieldValues } from 'react-hook-form';
 import { useLoginMutation, useRegisterMutation } from '../../redux/features/auth/authApi';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { useAppDispatch } from '../../redux/hooks';
 import { setUser } from '../../redux/features/auth/authSlice';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { registrationSchema } from '../../schemas/loginRegistrationSchema';
+import FInputNumber from '../../components/form/FInputNumber';
+import FSelect from '../../components/form/FSelect';
+import { genderOptions } from '../constants/BookCategoryOptions';
+import FDatePicker from '../../components/form/FDatePicker';
 
 
 interface DrawerSliderProps {
@@ -37,6 +39,8 @@ const Register: React.FC<DrawerSliderProps> = () => {
     formData.append('data', JSON.stringify(data));
     formData.append('file', data.profileImage);
 
+    console.log(Object.fromEntries(formData));
+
     
     try {
       await register(formData).unwrap();
@@ -64,25 +68,35 @@ const Register: React.FC<DrawerSliderProps> = () => {
       </div>
 
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <FForm onSubmit={onsubmit} resolver={zodResolver(registrationSchema)}>
-          <Controller name="profileImage" render={({field: {onChange, value, ...field}}) => (
-            <Form.Item label={"Profile Image"}>
-              <Input type="file" value={value?.fileName} {...field} placeholder={"Enter your bookimage"} onChange={(e) => onChange(e.target.files?.[0])} />
-            </Form.Item>
-          )} />
+        <FForm onSubmit={onsubmit}>
+          <Controller name="profileImage" render={({field: {onChange, value, ...field}, fieldState: {error}}) => (
+              <Form.Item label={"Profile Image"}>
+                <Input type="file" value={value?.filename} {...field} placeholder={""} onChange={(e) => onChange(e.target.files?.[0])} />
+                {error && <small style={{color: 'red'}}>{error.message}</small>}
+              </Form.Item>
+            )} />
+
           <FInput type="text" name="name" label={"Name"} placeholder={"Enter your name"} />
 
           <FInput type="text" name="email" label={"Email"} placeholder={"Enter your email"} />
 
           <FInput type="password" name="password" label={"Password"} placeholder={"Enter your password"} />
 
+          <FInputNumber name="phone" label={"Phone Number"} placeholder={"Enter your phone number"} />
+
+          <FInput type="text" name="address" label={"Address"} placeholder={"Enter your address"} />
+
+          <FSelect label={"Gender"} name={"gender"} options={genderOptions} />
+
+          <FDatePicker name="dateofbirth" label={"Date Of Birth"} placeholder={"Enter your birthday"} />
+
           <div>
-            <button
-              type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            <Button
+              htmlType="submit"
+              type="primary"
             >
               Register
-            </button>
+            </Button>
           </div>
         </FForm>
 

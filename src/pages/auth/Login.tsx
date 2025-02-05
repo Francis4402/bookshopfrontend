@@ -39,7 +39,7 @@ const Login: React.FC<DrawerSliderProps> = () => {
       toast.success("Login Successful");
 
       if(user.role === 'admin') {
-        navigate(`/${user.role}`);
+        navigate(`/${user.role}/dashboard`);
       } else {
         navigate('/');
       }

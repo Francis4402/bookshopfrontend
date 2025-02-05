@@ -1,7 +1,8 @@
 import { ReactNode } from "react"
-import { useAppDispatch, useAppSelector } from "../redux/hooks"
-import { logout, selectCurrentUser, useCurrentToken } from "../redux/features/auth/authSlice"
+import { useAppDispatch, useAppSelector } from "../../redux/hooks"
+import { logout, selectCurrentUser, useCurrentToken } from "../../redux/features/auth/authSlice"
 import { Navigate } from "react-router-dom";
+import { toast } from "sonner";
 
 type TProtectedRouteProps = {
     children: ReactNode;
@@ -17,8 +18,12 @@ const ProtectedRoute = ({children, role}: TProtectedRouteProps) => {
     const dispatch = useAppDispatch();
 
     if (role !== undefined && role !== user?.role) {
-        return <Navigate to={`/`} replace={true} />
         dispatch(logout());
+
+        if(!user) {
+            toast.error("You are not authorized to access this page");
+        }
+        return <Navigate to={`/`} replace={true} />
     }
 
     if(!token) {

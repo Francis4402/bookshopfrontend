@@ -3,7 +3,7 @@ import { MdOutlineShoppingBag } from "react-icons/md";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { FaBars } from "react-icons/fa6";
 import DrawerSlider from "./DrawerSlider";
-import { Avatar, Dropdown, Space } from "antd";
+import { Dropdown, Space } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { AuthProps, PageProps, ShopProps } from "../Navmenuprops/NavMenuProps";
@@ -11,6 +11,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import logo from '/logo.png';
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { logout, selectCurrentUser } from "../../redux/features/auth/authSlice";
+import { toast } from "sonner";
 
 
 const Navbar = () => {
@@ -19,16 +20,18 @@ const Navbar = () => {
 
   const dispatch = useAppDispatch();
 
-  const handleLogout = () => dispatch(logout());
+  const handleLogout = () => {
+    dispatch(logout())
+    toast.success("Successfully logged out");
+  };
 
-  console.log(user);
 
   const menuItems = [
-    { key: 'profile', label: <Link to='/profile'>Profile</Link> },
-    {key: 'dashboard', label: <Link to='/admin/dashboard'>Dashboard</Link>},
+    { key: 'profile', label: <Link to={`/profile/${user?._id}`}>Profile</Link> },
+    ...(user?.role === 'admin' ? [{ key: 'dashboard', label: <Link to='/admin/dashboard'>Dashboard</Link> }] : []),
     { key: 'logout', label: <span onClick={handleLogout}>Logout</span> }
   ];
-
+  
   return (
     <div>
       <Topnav/>
@@ -93,9 +96,9 @@ const Navbar = () => {
             {
               user && (
                 <Dropdown menu={{ items: menuItems }} placement="bottomRight" trigger={['click']}>
-                    <Avatar style={{ backgroundColor: '#87d068', cursor: 'pointer' }}>
-                      <UserOutlined />
-                    </Avatar>
+                    <div className="cursor-pointer w-10 h-10 rounded-full overflow-hidden" style={{ backgroundColor: '#87d068' }}>
+                      {user?.profileImage ? <LazyLoadImage effect="blur" src={user?.profileImage} alt="i" /> : <UserOutlined />}
+                    </div>
                 </Dropdown>
               )
             }

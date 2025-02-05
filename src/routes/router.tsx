@@ -5,7 +5,7 @@ import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import { routeGenerator } from "./routes.Generator";
 import { adminPaths } from "./adminRoutes/admin_routes";
-import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "./ProtectedRoutes/ProtectedRoute";
 import MainLayout from "../pages/layouts/MainLayout";
 import Home from "../pages/Home";
 import EventsPage from "../pages/HomePages/EventsPage";
@@ -17,6 +17,8 @@ import Cart from "../pages/HomePages/Cart";
 import CheckOut from "../pages/HomePages/CheckOut";
 import BookDetailspage from "../pages/detailpages/BookDetailspage";
 import NotFoundPage from "../pages/404pages/NotFoundPage";
+import ProfilePage from "../pages/profilepage/ProfilePage";
+import ProtectedR2 from "./ProtectedRoutes/ProtectedR2";
 
 
 
@@ -74,6 +76,10 @@ const route = createBrowserRouter([
             {
                 path: '/register',
                 element: <Register/>
+            },
+            {
+                path: '/profile/:id',
+                element: <ProtectedR2><ProfilePage/></ProtectedR2>
             },
         ]
     },

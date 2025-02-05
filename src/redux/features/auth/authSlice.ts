@@ -3,11 +3,19 @@ import { RootState } from "../../store";
 
 
 export type TUser = {
-    useremail: string
-    role: string
-    profileImage?: string
-    iat: number
-    exp: number
+    _id: string,
+    key: string,
+    name: string,
+    phone: string,
+    address: string,
+    gender: string,
+    dateofbirth: string,
+    email: string;
+    isBlocked: boolean;
+    role: string;
+    profileImage?: string;
+    iat: number;
+    exp: number;
 }
 
 type TAuthState = {

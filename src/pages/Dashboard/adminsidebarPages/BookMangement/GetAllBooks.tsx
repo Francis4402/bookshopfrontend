@@ -39,19 +39,10 @@ const GetAllBooks = () => {
     };
 
 
-    const tableData = bookData?.data?.map(
-      ({_id, title, bookImage, author, price, category, description, quantity, inStock}) => ({
-      key: _id,
-      title,
-      bookImage,
-      author,
-      price,
-      category,
-      description,
-      quantity,
-      inStock,
-    })
-  );
+    const tableData = bookData?.data?.map((book) => ({
+      ...book,
+      key: book._id,
+    }))
 
   const columns: TableColumnsType<TBookstypes> = [
     {

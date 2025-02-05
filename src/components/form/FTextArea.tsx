@@ -16,7 +16,7 @@ const FTextArea = ({ name, label, placeholder, control}: TInputProps) => {
         <div style={{ marginBottom: '20px'}}>
             <Controller name={name} control={control} render={({field, fieldState: {error}}) => (
                 <Form.Item label={label}>
-                    <TextArea {...field} rows={4} id={name} maxLength={6} placeholder={placeholder} />
+                    <TextArea {...field} rows={4} id={name} placeholder={placeholder} />
                     {error && <small style={{color: 'red'}}>{error.message}</small>}
                 </Form.Item>
             )} />
