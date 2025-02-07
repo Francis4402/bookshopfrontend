@@ -2,8 +2,8 @@ import Topnav from "./Topnav"
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { FaBars } from "react-icons/fa6";
-import DrawerSlider from "./DrawerSlider";
-import { Dropdown, Space } from "antd";
+import DrawerSlider from "../Sliders/DrawerSlider";
+import { Avatar, Badge, Dropdown, Space } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { AuthProps, PageProps, ShopProps } from "../Navmenuprops/NavMenuProps";
@@ -12,6 +12,7 @@ import logo from '/logo.png';
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { logout, selectCurrentUser } from "../../redux/features/auth/authSlice";
 import { toast } from "sonner";
+import CartSlider from "../Sliders/CartSlider";
 
 
 const Navbar = () => {
@@ -19,6 +20,8 @@ const Navbar = () => {
   const user = useAppSelector(selectCurrentUser);
 
   const dispatch = useAppDispatch();
+
+  const cartData = useAppSelector((state) => state.cart);
 
   const handleLogout = () => {
     dispatch(logout())
@@ -83,8 +86,9 @@ const Navbar = () => {
 
           <div className="flex gap-4 items-center">
             <div className="md:flex hidden gap-4 items-center">
-              <MdOutlineShoppingBag size={25} />
-              <p className="text-sm">$0.00</p>
+              <CartSlider trigger={<Badge count={cartData.items.length > 0 ? cartData.totalQuantity : 0} size="small" offset={[-2, 0]} showZero>
+                <Avatar shape="circle" style={{ backgroundColor: "#0000", verticalAlign: "middle" }} size={25} icon={<MdOutlineShoppingBag size={25} style={{ color: "black"}} />} />
+              </Badge>} />
               |
               <HiMagnifyingGlass size={25} />
               |

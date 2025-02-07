@@ -4,6 +4,7 @@ import { TBookstypes, TQueryParams } from "../../../../types";
 import { Button, Collapse, Spin, Table, TableColumnsType, TableProps } from "antd";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 
 const GetAllBooks = () => {
@@ -50,7 +51,8 @@ const GetAllBooks = () => {
       dataIndex: "bookImage",
       responsive: ["xs", "sm", "md", "lg", "xl"],
       render: (imageUrl) => (
-        <img
+        <LazyLoadImage
+          effect="blur"
           src={imageUrl}
           alt="Book Cover"
           style={{ width: 50, height: 50, objectFit: "cover", borderRadius: 4 }}
@@ -110,8 +112,8 @@ const GetAllBooks = () => {
       title: "Action",
       render: (_, data) => (
         <div className="flex gap-2">
-          <Button onClick={() => handleNavigate(data.key)}>Update</Button>
-          <Button danger onClick={() => handleDelete(data.key)}>Delete</Button>
+          <Button onClick={() => handleNavigate(data._id)}>Update</Button>
+          <Button danger onClick={() => handleDelete(data._id)}>Delete</Button>
         </div>
       ),
     },

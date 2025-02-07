@@ -50,7 +50,7 @@ const DrawerSlider: React.FC<DrawerSliderProps> = ({ trigger }) => {
     return (
         <div>
             <Button type='text' onClick={showDrawer}>{trigger}</Button>
-            <Drawer onClose={onClose} open={open} className='drawer' size='default'>
+            <Drawer onClose={onClose} open={open} className='drawer' size='default' placement='top'>
                 <div className='flex flex-col gap-5'>
                     <img src='/logo.png' alt='i' className='w-20' />
                     

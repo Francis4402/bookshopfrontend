@@ -1,6 +1,9 @@
-import {configureStore} from "@reduxjs/toolkit";
+import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import authReducer from './features/auth/authSlice';
+import cartReducer from './features/cart/cartSlice';
+
 import { baseApi } from "./api/baseApi";
+
 import {persistStore, persistReducer, FLUSH,
     REHYDRATE,
     PAUSE,
@@ -9,18 +12,22 @@ import {persistStore, persistReducer, FLUSH,
     REGISTER, } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
+export const rootReducer = combineReducers({
+    [baseApi.reducerPath]: baseApi.reducer,
+    auth: authReducer,
+    cart: cartReducer,
+});
+
 const persistConfig = {
-    key: 'auth',
+    key: 'root',
     storage,
 };
 
-const persistedAuthReducer = persistReducer(persistConfig, authReducer);
+const persistedAuthReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
-    reducer: {
-        [baseApi.reducerPath]: baseApi.reducer,
-        auth: persistedAuthReducer,
-    },
+    reducer: persistedAuthReducer,
+    
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: {
             ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],

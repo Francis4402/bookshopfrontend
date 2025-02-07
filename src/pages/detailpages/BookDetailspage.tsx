@@ -17,6 +17,7 @@ const BookDetailspage = () => {
 
   const book = bookData?.[0];
 
+
   const [activeTab, setActiveTab] = useState('additional');
 
 
