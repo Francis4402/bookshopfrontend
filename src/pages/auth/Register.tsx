@@ -35,6 +35,10 @@ const Register: React.FC<DrawerSliderProps> = () => {
     formData.append('name', data.name);
     formData.append('email', data.email);
     formData.append('password', data.password);
+    formData.append('phone', data.phone);
+    formData.append('gender', data.gender);
+    formData.append('dateofbirth', data.dateOfBirth);
+    formData.append('address', data.address);
     
     formData.append('data', JSON.stringify(data));
     formData.append('file', data.profileImage);

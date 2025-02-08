@@ -30,7 +30,6 @@ const UpdateBookDetails = () => {
     const formData = new FormData();
 
     formData.append('data', JSON.stringify({
-      product_id: data.product_id,
       title: data.title,
       author: data.author,
       description: data.description,
@@ -63,9 +62,6 @@ const UpdateBookDetails = () => {
             <p className="mb-10 sm:text-2xl font-semibold text-xs">{book?.title}</p>
 
             <Row gutter={8}>
-              <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-                <FInput type="text" name="product_id" label={"Product ID"} placeholder={book?.product_id} />
-              </Col>
 
               <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
                 <FInput type="text" name="title" label={"Title"} placeholder={book?.title} />

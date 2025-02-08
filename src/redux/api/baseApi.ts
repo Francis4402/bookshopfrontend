@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { logout, setUser } from "../features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://book-shop-green.vercel.app/api/',
+    baseUrl: 'https://book-shop-green.vercel.app/',
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;

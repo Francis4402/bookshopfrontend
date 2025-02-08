@@ -27,7 +27,6 @@ const AddNewBooks = () => {
     const formData = new FormData();
 
     formData.append('data', JSON.stringify({
-      product_id: data.product_id,
       title: data.title,
       author: data.author,
       description: data.description,
@@ -61,9 +60,6 @@ const AddNewBooks = () => {
             <p className="mb-10 sm:text-2xl font-semibold text-xs">Add A New Book</p>
 
             <Row gutter={8}>
-              <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-                <FInput type="text" name="product_id" label={"Product ID"} placeholder={"Enter your product id"} />
-              </Col>
 
               <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
                 <FInput type="text" name="title" label={"Title"} placeholder={"Enter your title"} />

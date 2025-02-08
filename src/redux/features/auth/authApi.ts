@@ -6,10 +6,10 @@ import { TUser } from "./authSlice";
 const authApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation({
-            query: (userInfo) => ({
+            query: (data) => ({
                 url: '/auth/login',
                 method: 'POST',
-                body: userInfo,
+                body: data,
             }),
         }),
         register: builder.mutation({
@@ -31,7 +31,7 @@ const authApi = baseApi.injectEndpoints({
                 url: `/auth/users/${id}`,
                 method: 'GET',
             }),
-            transformResponse: (response: TResponseRedux<TUser>) => {
+            transformResponse: (response: TResponseRedux<TUser[]>) => {
                 return response.data;
             }
         }),
