@@ -29,7 +29,6 @@ const AllBooks = () => {
     const handleAddToCart = (book: TBookstypes) => {
       dispatch(
         addToCart({
-          product_id: book.product_id,
           bookImage: book.bookImage,
           category: book.category,
           _id: book._id,
