@@ -5,6 +5,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useAppDispatch } from '../../redux/hooks';
 import { addToCart } from '../../redux/features/cart/cartSlice';
 import { TBookstypes } from '../../types';
+import { toast } from 'sonner';
 
 
 
@@ -40,6 +41,8 @@ const AllBooks = () => {
           inStock: book.inStock,
         })
       )
+
+      toast.success("Added to cart");
     }
 
   return (
