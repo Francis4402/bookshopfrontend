@@ -1,4 +1,4 @@
-import { Controller, FieldValues, SubmitHandler } from "react-hook-form"
+import { Controller, FieldValues } from "react-hook-form"
 import FForm from "../../../../components/form/FForm";
 import FInput from "../../../../components/form/FInput";
 import { Button, Col, Form, Input, Row } from "antd";
@@ -22,7 +22,7 @@ const AddNewBooks = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
+  const handleSubmit = async (data: FieldValues) => {
 
     const formData = new FormData();
 
@@ -36,10 +36,9 @@ const AddNewBooks = () => {
 
     formData.append('data', JSON.stringify(data));
     
-    if (data.bookImage) {
-      formData.append('booksImage', data.bookImage);
-    }
- 
+    formData.append('booksImage', data.bookImage);
+    
+    console.log(Object.fromEntries(formData));
 
     try {
       await addBooks(formData).unwrap();
