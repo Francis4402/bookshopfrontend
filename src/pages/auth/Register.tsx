@@ -54,7 +54,7 @@ const Register: React.FC<DrawerSliderProps> = () => {
       
       dispatch(setUser({user: loginRes.data.user, token: loginRes.data.accessToken}));
 
-      navigate('/');
+      navigate('/login');
 
     } catch (error) {
       toast.error("Something went wrong");
