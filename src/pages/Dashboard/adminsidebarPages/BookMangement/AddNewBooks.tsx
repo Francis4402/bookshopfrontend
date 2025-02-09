@@ -26,17 +26,19 @@ const AddNewBooks = () => {
 
     const formData = new FormData();
 
-    formData.append('data', JSON.stringify({
-      title: data.title,
-      author: data.author,
-      description: data.description,
-      price: data.price,
-      quantity: data.quantity,
-      inStock: data.inStock,
-      category: data.category,
-      booksImage: data.bookImage,
-    }));
+    formData.append('title', data.title);
+    formData.append('author', data.author);
+    formData.append('description', data.description);
+    formData.append('price', data.price);
+    formData.append('quantity', data.quantity);
+    formData.append('inStock', data.inStock);
+    formData.append('category', data.category);
+
+    formData.append('data', JSON.stringify(data));
     
+    if (data.bookImage) {
+      formData.append('booksImage', data.bookImage);
+    }
  
 
     try {
