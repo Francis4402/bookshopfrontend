@@ -34,11 +34,9 @@ const AddNewBooks = () => {
       quantity: data.quantity,
       inStock: data.inStock,
       category: data.category,
+      booksImage: data.bookImage,
     }));
     
-    if (data.bookImage) {
-      formData.append('booksImage', data.bookImage);
-    }
  
 
     try {
