@@ -42,8 +42,8 @@ const AddNewBooks = () => {
  
 
     try {
-      const res = await addBooks(formData);
-      console.log(res);
+      await addBooks(formData).unwrap();
+
       toast.success('Book Data Stored Successfully')
       navigate('/admin/get-products');
       refetch();
