@@ -21,7 +21,7 @@ const AutoGraphysection = () => {
       <div className="lg:my-52 my-28 relative">
         <div className="flex flex-col gap-10 md:flex-row justify-center items-center">
             <LazyLoadImage effect="blur" src="/autographytravelog1.png" className="lg:block hidden w-[600px]" alt="i" />
-            <LazyLoadImage effect="blur" src="/autographytravelog2.png" className="lg:hidden block md:w-[400px] w-full" alt="i" />
+            <LazyLoadImage effect="blur" src="/autographytravelog2.png" className="lg:hidden block lg:w-[400px] w-full" alt="i" />
             <div className="flex flex-col max-w-md gap-8 items-start justify-center">
                 <p className="text-gray-400 tracking-widest">AUTOBIOGRAPHY</p>
                 <h2 className="md:text-4xl text-xl font-serif">This month's guest host</h2>

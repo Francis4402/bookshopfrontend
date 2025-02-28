@@ -1,9 +1,10 @@
 import { Button, Drawer } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { removeFromCart, updateQuantity } from '../../redux/features/cart/cartSlice';
 import { useCreateOrderMutation } from '../../redux/features/order/order';
+import { toast } from 'sonner';
 
 interface DrawerSliderProps {
     trigger?: React.ReactNode;
@@ -16,7 +17,7 @@ const CartSlider: React.FC<DrawerSliderProps> = ({ trigger }) => {
     const onClose = () => setOpen(false);
 
     const dispatch = useAppDispatch();
-    const [createOrder] = useCreateOrderMutation();
+    const [createOrder, {isLoading, isSuccess, data, isError, error}] = useCreateOrderMutation();
 
     const cartData = useAppSelector((state) => state.cart);
 
@@ -24,15 +25,33 @@ const CartSlider: React.FC<DrawerSliderProps> = ({ trigger }) => {
         await createOrder({ products: cartData.items });
     };
 
+    const toastId = "cart";
+
+    useEffect(() => {
+        if (isLoading) toast.loading("Processing ...", {id: toastId});
+
+        if (isSuccess) {
+            toast.success(data?.message, {id: toastId});
+
+            if (data?.data) {
+                setTimeout(() => {
+                    window.location.href = data.data;
+                }, 1000);
+            }
+        }
+
+        if (isError) toast.error(JSON.stringify(error), {id: toastId});
+    }, [data?.data, data?.message, error, isError, isLoading, isSuccess]);
+
     return (
         <div>
             <Button type='text' onClick={showDrawer}>{trigger}</Button>
             <Drawer onClose={onClose} open={open} className='drawer' size='default'>
                 
-                {/* Drawer Content with Scrollable Cart Items */}
+
                 <div className="flex flex-col h-full">
                     
-                    {/* Scrollable Product List */}
+
                     <div className="flex-grow overflow-y-auto max-h-[550px] pr-2">
                         {
                             cartData.items.length > 0 ? (
@@ -47,7 +66,7 @@ const CartSlider: React.FC<DrawerSliderProps> = ({ trigger }) => {
                                                     onClick={() => dispatch(updateQuantity({
                                                         id: item._id,
                                                         quantity: Math.max(item.quantity - 1, 1)
-                                                    }))} 
+                                                    }))}
                                                     className='w-6 h-6 bg-gray-200 text-black rounded hover:bg-gray-300'
                                                 >
                                                     -
@@ -78,12 +97,12 @@ const CartSlider: React.FC<DrawerSliderProps> = ({ trigger }) => {
                                     </li>
                                 ))
                             ) : (
-                                <p className="text-center text-gray-500">Your cart is empty.</p>
+                                <p className="text-center text-gray-500">Your cart is empty</p>
                             )
                         }
                     </div>
 
-                    {/* Order Summary & Fixed Place Order Button */}
+
                     <div className="border-t p-4 bg-white shadow-md">
                         <div className="flex justify-between items-center mb-4">
                             <span className="text-sm font-medium text-gray-700">Total Quantity:</span>
@@ -95,9 +114,9 @@ const CartSlider: React.FC<DrawerSliderProps> = ({ trigger }) => {
                             <span className="text-lg font-bold">${cartData.totalPrice.toFixed(2)}</span>
                         </div>
 
-                        {/* Place Order Button at the Bottom */}
+
                         <Button 
-                            type="primary" 
+                            type="primary"
                             block 
                             onClick={handlePlaceOrder} 
                             className="mt-4"

@@ -15,6 +15,8 @@ const AllBooks = () => {
     const {data: bookData, isLoading } = useGetAllBooksQuery(undefined, {
       refetchOnMountOrArgChange: true,
     });
+
+    console.log(bookData);
     
   
     const navigate = useNavigate();
@@ -29,9 +31,9 @@ const AllBooks = () => {
     const handleAddToCart = (book: TBookstypes) => {
       dispatch(
         addToCart({
+          _id: book._id,
           bookImage: book.bookImage,
           category: book.category,
-          _id: book._id,
           title: book.title,
           author: book.author,
           price: book.price,
@@ -67,9 +69,11 @@ const AllBooks = () => {
                     <p>{book.inStock ? "In Stock" : "Out of Stock"}</p>
                 </div>
 
-                <Button type='primary' className='mt-3 w-full' onClick={() => handleAddToCart(book)}>
+                {book.inStock ? <Button type='primary' className='mt-3 w-full' onClick={() => handleAddToCart(book)}>
                   Add to Cart
-                </Button>
+                </Button>: <Button type='primary' disabled className='mt-3 w-full' onClick={() => handleAddToCart(book)}>
+                  Out of Stock
+                </Button>}
             </Card>
           )
         )}
