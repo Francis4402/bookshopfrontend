@@ -86,7 +86,7 @@ const CartSlider: React.FC<DrawerSliderProps> = ({ trigger }) => {
                                             </div>
                                         </div>
                                         <p className="text-sm font-semibold text-gray-800">
-                                            ${(item.quantity * item.price).toFixed(2)}
+                                            TK {item.price * item.quantity}
                                         </p>
                                         <button 
                                             onClick={() => dispatch(removeFromCart(item._id))} 
@@ -111,7 +111,7 @@ const CartSlider: React.FC<DrawerSliderProps> = ({ trigger }) => {
 
                         <div className="flex justify-between items-center mb-4">
                             <span className="text-sm font-medium text-gray-700">Total Price:</span>
-                            <span className="text-lg font-bold">${cartData.totalPrice.toFixed(2)}</span>
+                            <span className="text-lg font-bold">TK {cartData.totalPrice.toFixed(2)}</span>
                         </div>
 
 
